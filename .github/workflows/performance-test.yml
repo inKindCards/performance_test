@@ -40,10 +40,11 @@ jobs:
           tar -xvzf apache-jmeter-5.6.3.tgz
           export JMETER_HOME=$(pwd)/apache-jmeter-5.6.3
           export PATH=$JMETER_HOME/bin:$PATH
+          echo "JMeter installation complete."
         else
           echo "JMeter is available. Skipping installation..."
         fi
-    
+
     - name: Set environment and parameters
       run: |
         echo "Running performance test with parameters:"
@@ -54,6 +55,8 @@ jobs:
 
     - name: Run JMeter API Performance Test
       run: |
+        export JMETER_HOME=$(pwd)/apache-jmeter-5.6.3
+        export PATH=$JMETER_HOME/bin:$PATH
         jmeter -n \
         -t performance_test/UsersApp_APIs.jmx \
         -Jenvironment=${{ github.event.inputs.environment }} \
