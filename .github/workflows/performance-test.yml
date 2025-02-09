@@ -64,13 +64,13 @@ jobs:
         -e -o result-html
         
     - name: Upload JMeter CSV Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: jmeter-csv-report
         path: result.csv
 
     - name: Upload JMeter HTML Report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: jmeter-html-report
         path: result-html
