@@ -3,7 +3,7 @@ name: Run JMeter API Performance Test
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      Environment:
         description: 'Host name'
         required: true
         default: 'inkind-staging.com'
@@ -48,11 +48,11 @@ jobs:
     - name: Environment and parameters
       run: |
         echo "Running performance test with parameters:"
-        echo "Environment: ${{ github.event.inputs.environment }}"
+        echo "Environment: ${{ github.event.inputs.Environment }}"
         echo "Threads: ${{ github.event.inputs.Threads }}"
         echo "Ramp-up Time: ${{ github.event.inputs.RampupPeriod }}"
         echo "Loop Count: ${{ github.event.inputs.LoopCount }}"
-        echo "jmeter -n -t ./UsersApp_APIs.jmx -Jenvironment=${{ github.event.inputs.environment }} -JThreads=${{ github.event.inputs.Threads }} -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} -JLoopCount=${{ github.event.inputs.LoopCount }} -l result.csv -e -o result-html"
+        echo "jmeter -n -t ./UsersApp_APIs.jmx -JEnvironment=${{ github.event.inputs.Environment }} -JThreads=${{ github.event.inputs.Threads }} -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} -JLoopCount=${{ github.event.inputs.LoopCount }} -l result.csv -e -o result-html"
 
     - name: Run JMeter API Performance Test
       run: |
@@ -60,21 +60,19 @@ jobs:
         export PATH=$JMETER_HOME/bin:$PATH
         jmeter -n \
         -t ./UsersApp_APIs.jmx \
-        -Jenvironment=${{ github.event.inputs.environment }} \
+        -JEnvironment=${{ github.event.inputs.Environment }} \
         -JThreads=${{ github.event.inputs.Threads }} \
         -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} \
         -JLoopCount=${{ github.event.inputs.LoopCount }} \
         -l result.csv \
         -e -o result-html
         
-    # Upload JMeter CSV Report
     - name: Upload JMeter CSV Report
       uses: actions/upload-artifact@v4
       with:
         name: jmeter-csv-report
         path: result.csv
 
-    # Upload JMeter HTML Report
     - name: Upload JMeter HTML Report
       uses: actions/upload-artifact@v4
       with:
