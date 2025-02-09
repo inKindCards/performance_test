@@ -45,33 +45,36 @@ jobs:
           echo "JMeter is available. Skipping installation..."
         fi
 
-    - name: Set environment and parameters
+    - name: Environment and parameters
       run: |
         echo "Running performance test with parameters:"
         echo "Environment: ${{ github.event.inputs.environment }}"
         echo "Threads: ${{ github.event.inputs.Threads }}"
         echo "Ramp-up Time: ${{ github.event.inputs.RampupPeriod }}"
         echo "Loop Count: ${{ github.event.inputs.LoopCount }}"
+        echo "jmeter -n -t ./UsersApp_APIs.jmx -Jenvironment=${{ github.event.inputs.environment }} -JThreads=${{ github.event.inputs.Threads }} -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} -JLoopCount=${{ github.event.inputs.LoopCount }} -l result.csv -e -o result-html"
 
     - name: Run JMeter API Performance Test
       run: |
         export JMETER_HOME=$(pwd)/apache-jmeter-5.6.3
         export PATH=$JMETER_HOME/bin:$PATH
         jmeter -n \
-        -t ./UsersApp_APIs.jmx \ 
+        -t ./UsersApp_APIs.jmx \
         -Jenvironment=${{ github.event.inputs.environment }} \
-        -Jthreads=${{ github.event.inputs.Threads }} \
-        -Jrampup_time=${{ github.event.inputs.RampupPeriod }} \
-        -Jloop_count=${{ github.event.inputs.LoopCount }} \
+        -JThreads=${{ github.event.inputs.Threads }} \
+        -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} \
+        -JLoopCount=${{ github.event.inputs.LoopCount }} \
         -l result.csv \
         -e -o result-html
         
+    # Upload JMeter CSV Report
     - name: Upload JMeter CSV Report
       uses: actions/upload-artifact@v4
       with:
         name: jmeter-csv-report
         path: result.csv
 
+    # Upload JMeter HTML Report
     - name: Upload JMeter HTML Report
       uses: actions/upload-artifact@v4
       with:
