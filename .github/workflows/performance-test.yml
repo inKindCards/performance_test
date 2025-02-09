@@ -1,0 +1,76 @@
+name: Run JMeter API Performance Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Host name'
+        required: true
+        default: 'inkind-staging.com'
+      Threads:
+        description: 'Number of threads (users)'
+        required: true
+        default: '2'
+      RampupPeriod:
+        description: 'Ramp-up time in seconds'
+        required: true
+        default: '1'
+      LoopCount:
+        description: 'Loop count'
+        required: true
+        default: '1'
+
+jobs:
+  performance_test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout performance_test repository
+      uses: actions/checkout@v3
+      with:
+        repository: inKindCards/performance_test
+        ref: main
+  
+    - name: Install JMeter
+      run: |
+        if ! command -v jmeter &> /dev/null
+        then
+          echo "JMeter not found, installing..."
+          wget https://dlcdn.apache.org/jmeter/binaries/apache-jmeter-5.5.tgz
+          tar -xvzf apache-jmeter-5.5.tgz
+          export JMETER_HOME=$(pwd)/apache-jmeter-5.5
+          export PATH=$JMETER_HOME/bin:$PATH
+        else
+          echo "JMeter is available. Skipping installation..."
+        fi
+    
+    - name: Set environment and parameters
+      run: |
+        echo "Running performance test with parameters:"
+        echo "Environment: ${{ github.event.inputs.environment }}"
+        echo "Threads: ${{ github.event.inputs.Threads }}"
+        echo "Ramp-up Time: ${{ github.event.inputs.RampupPeriod }}"
+        echo "Loop Count: ${{ github.event.inputs.LoopCount }}"
+
+    - name: Run JMeter API Performance Test
+      run: |
+        jmeter -n \
+        -t performance_test/UsersApp_APIs.jmx \
+        -Jenvironment=${{ github.event.inputs.environment }} \
+        -Jthreads=${{ github.event.inputs.Threads }} \
+        -Jrampup_time=${{ github.event.inputs.RampupPeriod }} \
+        -Jloop_count=${{ github.event.inputs.LoopCount }} \
+        -l result.csv \
+        -e -o result-html
+        
+    - name: Upload JMeter CSV Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: jmeter-csv-report
+        path: result.csv
+
+    - name: Upload JMeter HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: jmeter-html-report
+        path: result-html
