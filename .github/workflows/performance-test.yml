@@ -52,14 +52,14 @@ jobs:
         echo "Threads: ${{ github.event.inputs.Threads }}"
         echo "Ramp-up Time: ${{ github.event.inputs.RampupPeriod }}"
         echo "Loop Count: ${{ github.event.inputs.LoopCount }}"
-        echo "jmeter -n -t ./UsersApp_APIs.jmx -JEnvironment=${{ github.event.inputs.Environment }} -JThreads=${{ github.event.inputs.Threads }} -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} -JLoopCount=${{ github.event.inputs.LoopCount }} -l result.csv -e -o result-html"
+        echo "jmeter -n -t ./inKind_API.jmx -JEnvironment=${{ github.event.inputs.Environment }} -JThreads=${{ github.event.inputs.Threads }} -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} -JLoopCount=${{ github.event.inputs.LoopCount }} -l result.csv -e -o result-html"
 
     - name: Run JMeter API Performance Test
       run: |
         export JMETER_HOME=$(pwd)/apache-jmeter-5.6.3
         export PATH=$JMETER_HOME/bin:$PATH
         jmeter -n \
-        -t ./UsersApp_APIs.jmx \
+        -t ./inKind_API.jmx \
         -JEnvironment=${{ github.event.inputs.Environment }} \
         -JThreads=${{ github.event.inputs.Threads }} \
         -JRampupPeriod=${{ github.event.inputs.RampupPeriod }} \
