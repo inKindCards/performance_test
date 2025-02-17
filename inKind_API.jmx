@@ -11,15 +11,15 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="UserApp_Automation_PostmanRegression">
-        <intProp name="ThreadGroup.num_threads">1</intProp>
-        <intProp name="ThreadGroup.ramp_time">1</intProp>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="inKind API Thread Group">
+        <stringProp name="ThreadGroup.num_threads">${__P(Threads,1)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(RampupPeriod,1)}</stringProp>
         <longProp name="ThreadGroup.duration">0</longProp>
         <longProp name="ThreadGroup.delay">0</longProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController">
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">${__P(LoopCount,1)}</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
@@ -30,13 +30,18 @@
           <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
         </CookieManager>
         <hashTree/>
-        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables  CSV Data">
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
           <collectionProp name="Arguments.arguments">
             <elementProp name="email" elementType="Argument">
               <stringProp name="Argument.name">email</stringProp>
               <stringProp name="Argument.value">hemanth.reddy+staging@inkind.com</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">csv</stringProp>
+            </elementProp>
+            <elementProp name="Host" elementType="Argument">
+              <stringProp name="Argument.name">Host</stringProp>
+              <stringProp name="Argument.value">${__P(environment,inkind-staging.com)}</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="password" elementType="Argument">
               <stringProp name="Argument.name">password</stringProp>
@@ -152,11 +157,6 @@
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">csv</stringProp>
             </elementProp>
-            <elementProp name="Host" elementType="Argument">
-              <stringProp name="Argument.name">Host</stringProp>
-              <stringProp name="Argument.value">inkind-staging.com</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
             <elementProp name="ThinkTime" elementType="Argument">
               <stringProp name="Argument.name">ThinkTime</stringProp>
               <stringProp name="Argument.value">3</stringProp>
@@ -218,7 +218,7 @@
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
-          <stringProp name="TestPlan.comments">temp User defined veriables this data will be configured from CSV </stringProp>
+          <stringProp name="TestPlan.comments">User defined variables. This data will be read from CSV </stringProp>
         </Arguments>
         <hashTree/>
         <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults">
@@ -234,7 +234,7 @@
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Login" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
@@ -307,7 +307,7 @@
               <boolProp name="RegexExtractor.default_empty_value">false</boolProp>
             </RegexExtractor>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="phone_number">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="phone_number" enabled="true">
               <stringProp name="TestPlan.comments">json_version</stringProp>
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">phone_number</stringProp>
@@ -372,7 +372,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check User Exists">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check User Exists" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
@@ -436,7 +436,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check if email is valid or a typo (used during signup)">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check if email is valid or a typo (used during signup)" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.protocol">https</stringProp>
@@ -498,7 +498,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POS Auth Tokens">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="POS Auth Tokens" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">api.inkind.com</stringProp>
@@ -542,7 +542,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="569144446">&quot;data&quot;:&quot;</stringProp>
               </collectionProp>
@@ -552,19 +552,19 @@
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer">
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
               <stringProp name="ConstantTimer.delay">${ThinkTime}</stringProp>
             </ConstantTimer>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Current User Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Current User Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+          <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
           <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create stripe token">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create stripe token" enabled="true">
               <intProp name="HTTPSampler.connect_timeout">60000</intProp>
               <intProp name="HTTPSampler.response_timeout">60000</intProp>
               <stringProp name="HTTPSampler.domain">api.stripe.com</stringProp>
@@ -662,7 +662,7 @@
               <hashTree/>
             </hashTree>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add new stripe resource">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Add new stripe resource" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -712,7 +712,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="-827648355">credit_cards</stringProp>
                 <stringProp name="3355">id</stringProp>
@@ -723,7 +723,7 @@
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="stripeid">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="stripeid" enabled="true">
               <stringProp name="TestPlan.comments">stripeid</stringProp>
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">stripeid</stringProp>
@@ -735,7 +735,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all stripe sources">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all stripe sources" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -750,7 +750,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
@@ -779,7 +779,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="-827648355">credit_cards</stringProp>
                 <stringProp name="3355">id</stringProp>
@@ -845,7 +845,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all user accounts / balances (Heatbeat)">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all user accounts / balances (Heatbeat)" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -901,7 +901,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get user&apos;s credit back balance">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get user&apos;s credit back balance" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -961,7 +961,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get &quot;Home&quot; feed">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get &quot;Home&quot; feed" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1021,7 +1021,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get user history">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get user history" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1069,7 +1069,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="1954122069">transactions</stringProp>
               </collectionProp>
@@ -1080,7 +1080,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get current user">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get current user" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1146,7 +1146,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Current User Recommendations">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Current User Recommendations" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1199,7 +1199,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all experiences user is assigned to">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all experiences user is assigned to" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1258,7 +1258,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update the users favorite value for brand">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Update the users favorite value for brand" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1372,7 +1372,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check if inKind Cash gift code is valid">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Check if inKind Cash gift code is valid" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1432,7 +1432,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get user&apos;s rewards">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get user&apos;s rewards" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1540,7 +1540,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get favorite brands">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get favorite brands" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1595,7 +1595,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Addition dietary">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Addition dietary" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1670,7 +1670,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve dietary">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve dietary" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1726,7 +1726,7 @@
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Recommended Carousel">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Recommended Carousel" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -1782,7 +1782,7 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Screen Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Home Screen Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
@@ -2138,11 +2138,11 @@
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="inKind Cash Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="inKind Cash Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all inKind Cash Offers">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all inKind Cash Offers" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2166,7 +2166,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="authorization" elementType="Header">
                   <stringProp name="Header.name">authorization</stringProp>
@@ -2195,7 +2195,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="-1019793001">offers</stringProp>
                 <stringProp name="-1251334713">gco_id</stringProp>
@@ -2206,7 +2206,7 @@
               <intProp name="Assertion.test_type">2</intProp>
             </ResponseAssertion>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="inkind_cash_offer_id">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="inkind_cash_offer_id" enabled="true">
               <stringProp name="TestPlan.comments">inkind_cash_offer_id</stringProp>
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">inkind_cash_offer_id</stringProp>
@@ -2218,7 +2218,7 @@
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Purchase an inKind Cash Offer (ICO)">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Purchase an inKind Cash Offer (ICO)" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2239,7 +2239,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
@@ -2269,7 +2269,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all inKind Cash Gifts related to user">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all inKind Cash Gifts related to user" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2284,7 +2284,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
@@ -2313,7 +2313,7 @@
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="493631575">gift_codes</stringProp>
               </collectionProp>
@@ -2375,7 +2375,7 @@
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all inKind Cash transactions">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all inKind Cash transactions" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2446,7 +2446,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
@@ -2502,7 +2502,7 @@
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Content-Type" elementType="Header">
                   <stringProp name="Header.name">Content-Type</stringProp>
@@ -2570,7 +2570,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </BeanShellPostProcessor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve ticket - Omnivore">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve ticket - Omnivore" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2675,7 +2675,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="ammount">
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="ammount" enabled="true">
               <stringProp name="TestPlan.comments">ammount</stringProp>
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">ammount</stringProp>
@@ -2687,7 +2687,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </RegexExtractor>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Close ticket Omnivore">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Close ticket Omnivore" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2809,7 +2809,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </HeaderManager>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all employees at location">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get all employees at location" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -2879,7 +2879,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get open tickets">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get open tickets" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3015,11 +3015,11 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Offer Claiming Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Offer Claiming Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Offer">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get Offer" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3104,7 +3104,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
@@ -3129,7 +3129,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="49586">200</stringProp>
               </collectionProp>
@@ -3140,7 +3140,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Send SMS Verify">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Send SMS Verify" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">app.${Host}</stringProp>
@@ -3205,7 +3205,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Send SMS Code">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Send SMS Code" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">app.${Host}</stringProp>
@@ -3286,7 +3286,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Memberships  Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Memberships  Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
@@ -3424,7 +3424,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get my plan">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Get my plan" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3439,7 +3439,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </elementProp>
           </HTTPSamplerProxy>
           <hashTree>
-            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager">
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
               <collectionProp name="HeaderManager.headers">
                 <elementProp name="Accept" elementType="Header">
                   <stringProp name="Header.name">Accept</stringProp>
@@ -3468,14 +3468,14 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
               </collectionProp>
             </HeaderManager>
             <hashTree/>
-            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor">
+            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
               <stringProp name="filename"></stringProp>
               <stringProp name="parameters"></stringProp>
               <boolProp name="resetInterpreter">false</boolProp>
               <stringProp name="script"></stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion">
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
               <collectionProp name="Asserion.test_strings">
                 <stringProp name="51512">404</stringProp>
               </collectionProp>
@@ -3486,7 +3486,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Cancel current membership">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Cancel current membership" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3546,7 +3546,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Availability">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Availability" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3678,7 +3678,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Reservation">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Reservation" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3732,7 +3732,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Availability">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Retrieve Availability" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3864,7 +3864,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Reservation">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Reservation" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3918,7 +3918,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search Availability">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Search Availability" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -3998,7 +3998,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="7roomsAvailability">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="7roomsAvailability" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">${Host}</stringProp>
@@ -4129,7 +4129,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Booking SevenRooms">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Booking SevenRooms" enabled="true">
             <intProp name="HTTPSampler.connect_timeout">60000</intProp>
             <intProp name="HTTPSampler.response_timeout">60000</intProp>
             <stringProp name="HTTPSampler.domain">inkind-staging.com</stringProp>
@@ -4273,7 +4273,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Feature Flags  Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Feature Flags  Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
@@ -4333,7 +4333,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             <hashTree/>
           </hashTree>
         </hashTree>
-        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Others API Controller">
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Others API Controller" enabled="true">
           <boolProp name="TransactionController.includeTimers">false</boolProp>
         </TransactionController>
         <hashTree>
@@ -4577,7 +4577,7 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
             <hashTree/>
           </hashTree>
         </hashTree>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -4655,10 +4655,20 @@ vars.put(&quot;lastID&quot;, ticket_code_Omnivore); // to store the value</strin
           <stringProp name="cacheKey">true</stringProp>
           <stringProp name="filename"></stringProp>
           <stringProp name="parameters"></stringProp>
-          <stringProp name="script">def authToken = vars.get(&quot;auth_token&quot;);
+          <stringProp name="script">def host = vars.get(&quot;Host&quot;);
+log.info(&apos;Host: &apos;+ host);
+println(&apos;Host: &apos;+ host);
+
+def authToken = vars.get(&quot;auth_token&quot;);
 def email = vars.get(&quot;email&quot;);
 log.info(&apos;Email: &apos;+ email+&apos; ; Token: &apos;+authToken);
-println(&apos;Email: &apos;+ email+&apos; ; Token: &apos;+authToken);</stringProp>
+println(&apos;Email: &apos;+ email+&apos; ; Token: &apos;+authToken);
+
+def omnivoreTicket = vars.get(&quot;ticket_code_Omnivore&quot;);
+def omnivoreTicketAmount = vars.get(&quot;ammount&quot;);
+log.info(&apos;Omnivore Ticket: &apos;+ omnivoreTicket + &apos; ; Amount: &apos;+omnivoreTicketAmount);
+println(&apos;Omnivore Ticket: &apos;+ omnivoreTicket + &apos; ; Amount: &apos;+omnivoreTicketAmount);
+</stringProp>
           <stringProp name="scriptLanguage">groovy</stringProp>
         </JSR223Sampler>
         <hashTree/>
